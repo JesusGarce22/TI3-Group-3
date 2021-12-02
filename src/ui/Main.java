@@ -31,7 +31,6 @@ public class Main extends Application {
 
 		game.loadLogin();
 	
-		
 	}
 
 }

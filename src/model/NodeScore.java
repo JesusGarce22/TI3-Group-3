@@ -57,7 +57,7 @@ public class NodeScore {
 				this.right.insert(newkey,player);
 			}
 		}else {
-			this.value.add(new Player(newkey, player.getUserName()));
+			this.value.add(new Player(player.getUserName(),newkey ));
 		}
 	}
 }
