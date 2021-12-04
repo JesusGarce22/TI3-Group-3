@@ -99,7 +99,7 @@ public class Game extends Stage{
 
 
 	public void SearchUser(ActionEvent event) throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("DeleteOrSearch.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("Search.fxml"));
 
 		loader.setController(this);
 		Parent addUser = loader.load();
@@ -113,14 +113,6 @@ public class Game extends Stage{
 	}
 
 	public void deleteScore(ActionEvent event) throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("DeleteOrSearch.fxml"));
-
-		loader.setController(this);
-		Parent addUser = loader.load();
-
-		mainPane.setCenter(addUser);
-		mainPane.getChildren().clear();
-		mainPane.setTop(addUser);
 		
 		String key = nameDeleteOrSearch.getText();
 		nameTree.trigerDelete(key);
