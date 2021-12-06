@@ -5,6 +5,7 @@ import ui.Game;
 public class Chronometer extends Thread {
 
 	private Game game;
+	private boolean process = true;
 
 	public Chronometer(Game game) {
 		this.game = game;
@@ -23,7 +24,13 @@ public class Chronometer extends Thread {
 			}
 
 		}
-		//mw.tell("Juego acabado");
+		
+		process = false;
+		game.tell(process);
+	}
+	
+	public boolean getProcess() {
+		return process;
 	}
 
 }

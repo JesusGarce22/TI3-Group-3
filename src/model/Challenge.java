@@ -2,17 +2,11 @@ package model;
 
 public class Challenge {
 
-	private String[] op;
 	private int answer;
 
 	public Challenge(int answer) {
-		op = new String[4];
+		
 		this.answer = answer;
-
-		op[0] = "+";
-		op[1] = "-";
-		op[2] = "*";
-		op[3] = "/";
 	}
 	
 	public Challenge() {}
@@ -54,15 +48,15 @@ public class Challenge {
 			answer = cociente;
 
 		}
-
+		
 		return problema;
+		
 
 	}
 
 	public int ramdonBotton() {
 
 		int botton = (int) (Math.random() * 4);
-
 		return botton;
 	}
 

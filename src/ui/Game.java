@@ -77,6 +77,7 @@ public class Game extends Stage{
     
     private int score1;
     private int fails;
+    private boolean mainProcces = true;
 
 	public Game() {
 		nameTree = new NameTree();
@@ -114,8 +115,29 @@ public class Game extends Stage{
 		mainPane.getChildren().clear();
 		mainPane.setTop(addUser);
 		
-		getOperation();
+		init();
 
+	}
+	
+	public void init() throws IOException {
+		
+		chro.start();
+		
+		
+			
+		 getOperation();
+		 
+	
+		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("Positions.fxml"));
+
+		loader.setController(this);
+		Parent addUser = loader.load();
+
+		mainPane.setCenter(addUser);
+		mainPane.getChildren().clear();
+		mainPane.setTop(addUser);
+		
 	}
 
 
@@ -152,116 +174,135 @@ public class Game extends Stage{
     }
     
 	public void getOperation() {
+		
+		operation.setText(challenge.operators());
+		ramdonBotton();
+		initBottons();
+		
 
-		chro.start();
+	}
+	
+	public void tell(boolean process) {
+		// run on ui thread
+		Platform.runLater(() -> { 
+			
+			mainProcces = process;
+			
+		});
+	}
+	
+	public void initBottons() {
+		
+		optionA.setOnAction(event -> {
 
-		do {
+			int ans = challenge.getAnswer();
 
-			operation.setText(challenge.operators());
-			ramdonBotton();
+			String an = Integer.toString(ans);
 
-			optionA.setOnAction(event -> {
+			if (optionA.getText().equals(an)) {
 
-				int ans = challenge.getAnswer();
+				score1 += 10;
+				String sc = Integer.toString(score1);
+				scoreLB.setText(sc);
+				getOperation();
 
-				String an = Integer.toString(ans);
+			} else {
 
-				if (optionA.getText().equals(an)) {
+				score1 -= 10;
+				String sc = Integer.toString(score1);
+				fails++;
+				String f = Integer.toString(fails);
+				failLB.setText(f);
+				scoreLB.setText(sc);
+				getOperation();
 
-					score1 += 10;
-					String sc = Integer.toString(score1);
-					scoreLB.setText(sc);
+			}
+			
 
-				} else {
+		});
 
-					score1 -= 10;
-					String sc = Integer.toString(score1);
-					fails++;
-					String f = Integer.toString(fails);
-					failLB.setText(f);
-					scoreLB.setText(sc);
+		optionB.setOnAction(event -> {
 
-				}
+			int ans = challenge.getAnswer();
 
-			});
+			String an = Integer.toString(ans);
 
-			optionB.setOnAction(event -> {
+			if (optionB.getText().equals(an)) {
 
-				int ans = challenge.getAnswer();
+				score1 += 10;
+				String sc = Integer.toString(score1);
+				scoreLB.setText(sc);
+				getOperation();
 
-				String an = Integer.toString(ans);
+			} else {
 
-				if (optionB.getText().equals(an)) {
+				score1 -= 10;
+				String sc = Integer.toString(score1);
+				fails++;
+				String f = Integer.toString(fails);
+				failLB.setText(f);
+				scoreLB.setText(sc);
+				getOperation();
 
-					score1 += 10;
-					String sc = Integer.toString(score1);
-					scoreLB.setText(sc);
+			}
 
-				} else {
+		});
 
-					score1 -= 10;
-					String sc = Integer.toString(score1);
-					fails++;
-					String f = Integer.toString(fails);
-					failLB.setText(f);
-					scoreLB.setText(sc);
+		optionC.setOnAction(event -> {
 
-				}
+			int ans = challenge.getAnswer();
 
-			});
+			String an = Integer.toString(ans);
 
-			optionC.setOnAction(event -> {
+			if (optionC.getText().equals(an)) {
 
-				int ans = challenge.getAnswer();
+				score1 += 10;
+				String sc = Integer.toString(score1);
+				scoreLB.setText(sc);
+				getOperation();
 
-				String an = Integer.toString(ans);
+			} else {
 
-				if (optionC.getText().equals(an)) {
+				score1 -= 10;
+				String sc = Integer.toString(score1);
+				fails++;
+				String f = Integer.toString(fails);
+				failLB.setText(f);
+				scoreLB.setText(sc);
+				getOperation();
 
-					score1 += 10;
-					String sc = Integer.toString(score1);
-					scoreLB.setText(sc);
+			}
 
-				} else {
+		});
 
-					score1 -= 10;
-					String sc = Integer.toString(score1);
-					fails++;
-					String f = Integer.toString(fails);
-					failLB.setText(f);
-					scoreLB.setText(sc);
+		optionD.setOnAction(event -> {
 
-				}
+			int ans = challenge.getAnswer();
 
-			});
+			String an = Integer.toString(ans);
 
-			optionD.setOnAction(event -> {
+			if (optionD.getText().equals(an)) {
 
-				int ans = challenge.getAnswer();
+				score1 += 10;
+				String sc = Integer.toString(score1);
+				scoreLB.setText(sc);
+				getOperation();
 
-				String an = Integer.toString(ans);
+			} else {
 
-				if (optionD.getText().equals(an)) {
+				score1 -= 10;
+				String sc = Integer.toString(score1);
+				fails++;
+				String f = Integer.toString(fails);
+				failLB.setText(f);
+				scoreLB.setText(sc);
+				getOperation();
 
-					score1 += 10;
-					String sc = Integer.toString(score1);
-					scoreLB.setText(sc);
+			}
 
-				} else {
-
-					score1 -= 10;
-					String sc = Integer.toString(score1);
-					fails++;
-					String f = Integer.toString(fails);
-					failLB.setText(f);
-					scoreLB.setText(sc);
-
-				}
-
-			});
-
-		} while (timeLabel.getText() != "0");
-
+		});
+		
+		
 	}
 
 	public void ramdonBotton() {
@@ -367,6 +408,10 @@ public class Game extends Stage{
 
 		});
 
+	}
+	
+	public boolean getMainProcces() {
+		return mainProcces;
 	}
 
 }

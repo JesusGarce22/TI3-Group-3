@@ -18,17 +18,17 @@
             <Image url="@../../Doc/albert-einstein.jpg" />
          </image>
       </ImageView>
-      <Label fx:id="scoreLB" layoutX="39.0" layoutY="14.0" prefHeight="38.0" prefWidth="61.0" text="Score:">
+      <Label fx:id="score" layoutX="39.0" layoutY="14.0" prefHeight="38.0" prefWidth="61.0" text="Score:">
          <font>
             <Font name="Agency FB" size="28.0" />
          </font>
       </Label>
-      <Label fx:id="operation" layoutX="355.0" layoutY="96.0" text="Opertations">
+      <Label fx:id="operation" layoutX="355.0" layoutY="96.0" text="Operations">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <Label fx:id="score" layoutX="100.0" layoutY="13.0" text="0">
+      <Label fx:id="scoreLB" layoutX="100.0" layoutY="13.0" text="0">
          <font>
             <Font size="28.0" />
          </font>
