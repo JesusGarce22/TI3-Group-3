@@ -7,11 +7,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.Challenge;
@@ -60,12 +62,12 @@ public class Game extends Stage{
 
 	@FXML
 	private Label score;
-    @FXML
-    private TextField nameDeleteOrSearch;
+	@FXML
+	private TextField nameDeleteOrSearch;
 
-    @FXML
-    private Button submit;
-    
+	@FXML
+	private Button submit;
+
 	@FXML
 	private Label timeLabel;
 
@@ -74,10 +76,10 @@ public class Game extends Stage{
 
 	@FXML
 	private Label failLB;
-    
-    private int score1;
-    private int fails;
-    private boolean mainProcces = true;
+
+	private int score1;
+	private int fails;
+	private boolean mainProcces = true;
 
 	public Game() {
 		nameTree = new NameTree();
@@ -100,44 +102,38 @@ public class Game extends Stage{
 
 	public void enterToTheGame(ActionEvent event)throws IOException {
 
-		String name=userName.getText();
+		if(userName.getText().equals("")) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("ERROR");
+			alert.setHeaderText("You must fill all the fields");
+			alert.setContentText(null);
+			alert.showAndWait();
+		}else {
+			String name=userName.getText();
 
-		Player p = new Player(name,0);
-		nameTree.add(name, p);
-		scoreTree.add(0, p);
+			Player p = new Player(name,0);
+			nameTree.add(name, p);
+			scoreTree.add(0, p);
 
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("Game.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("Game.fxml"));
 
-		loader.setController(this);
-		Parent addUser = loader.load();
+			loader.setController(this);
+			Parent addUser = loader.load();
 
-		mainPane.setCenter(addUser);
-		mainPane.getChildren().clear();
-		mainPane.setTop(addUser);
-		
-		init();
+			mainPane.setCenter(addUser);
+			mainPane.getChildren().clear();
+			mainPane.setTop(addUser);
 
+			init(p);
+		}
 	}
-	
-	public void init() throws IOException {
-		
+
+	public void init(Player p) throws IOException {
+
 		chro.start();
-		
-		
-			
-		 getOperation();
-		 
-	
-		
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("Positions.fxml"));
 
-		loader.setController(this);
-		Parent addUser = loader.load();
+		getOperation(p);
 
-		mainPane.setCenter(addUser);
-		mainPane.getChildren().clear();
-		mainPane.setTop(addUser);
-		
 	}
 
 
@@ -150,19 +146,20 @@ public class Game extends Stage{
 		mainPane.setCenter(addUser);
 		mainPane.getChildren().clear();
 		mainPane.setTop(addUser);
-		
+
 		String key = nameDeleteOrSearch.getText();
 		nameTree.triggerSearch(key);
 	}
 
 	public void deleteScore(ActionEvent event) throws IOException {
-		
+
 		String key = nameDeleteOrSearch.getText();
 		nameTree.trigerDelete(key);
 	}
 
-    @FXML
-    public void deleteOrSearch(ActionEvent event) throws IOException {
+	@FXML
+	public void deleteOrSearch(ActionEvent event) throws IOException {
+
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Positions.fxml"));
 
 		loader.setController(this);
@@ -171,28 +168,46 @@ public class Game extends Stage{
 		mainPane.setCenter(addUser);
 		mainPane.getChildren().clear();
 		mainPane.setTop(addUser);
-    }
-    
-	public void getOperation() {
-		
+	}
+
+	public void getOperation(Player p) throws IOException {
+
+		if(timeLabel.getText().equals("0")) {
+
+			int newScore = Integer.parseInt(scoreLB.getText());
+			p.setScore(newScore);
+			scoreTree.triggerInorder();
+
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("Positions.fxml"));
+
+			loader.setController(this);
+			Parent addUser = loader.load();
+
+			mainPane.setCenter(addUser);
+			mainPane.getChildren().clear();
+			mainPane.setTop(addUser);
+
+
+		}
+
 		operation.setText(challenge.operators());
 		ramdonBotton();
-		initBottons();
-		
+		initBottons(p);
+
 
 	}
-	
+
 	public void tell(boolean process) {
 		// run on ui thread
 		Platform.runLater(() -> { 
-			
+
 			mainProcces = process;
-			
+
 		});
 	}
-	
-	public void initBottons() {
-		
+
+	public void initBottons(Player p) {
+
 		optionA.setOnAction(event -> {
 
 			int ans = challenge.getAnswer();
@@ -204,7 +219,12 @@ public class Game extends Stage{
 				score1 += 10;
 				String sc = Integer.toString(score1);
 				scoreLB.setText(sc);
-				getOperation();
+				try {
+					getOperation(p);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			} else {
 
@@ -214,10 +234,15 @@ public class Game extends Stage{
 				String f = Integer.toString(fails);
 				failLB.setText(f);
 				scoreLB.setText(sc);
-				getOperation();
+				try {
+					getOperation(p);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}
-			
+
 
 		});
 
@@ -232,7 +257,12 @@ public class Game extends Stage{
 				score1 += 10;
 				String sc = Integer.toString(score1);
 				scoreLB.setText(sc);
-				getOperation();
+				try {
+					getOperation(p);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			} else {
 
@@ -242,7 +272,12 @@ public class Game extends Stage{
 				String f = Integer.toString(fails);
 				failLB.setText(f);
 				scoreLB.setText(sc);
-				getOperation();
+				try {
+					getOperation(p);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}
 
@@ -259,7 +294,12 @@ public class Game extends Stage{
 				score1 += 10;
 				String sc = Integer.toString(score1);
 				scoreLB.setText(sc);
-				getOperation();
+				try {
+					getOperation(p);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			} else {
 
@@ -269,7 +309,12 @@ public class Game extends Stage{
 				String f = Integer.toString(fails);
 				failLB.setText(f);
 				scoreLB.setText(sc);
-				getOperation();
+				try {
+					getOperation(p);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}
 
@@ -286,7 +331,12 @@ public class Game extends Stage{
 				score1 += 10;
 				String sc = Integer.toString(score1);
 				scoreLB.setText(sc);
-				getOperation();
+				try {
+					getOperation(p);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			} else {
 
@@ -296,13 +346,18 @@ public class Game extends Stage{
 				String f = Integer.toString(fails);
 				failLB.setText(f);
 				scoreLB.setText(sc);
-				getOperation();
+				try {
+					getOperation(p);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}
 
 		});
-		
-		
+
+
 	}
 
 	public void ramdonBotton() {
@@ -409,7 +464,7 @@ public class Game extends Stage{
 		});
 
 	}
-	
+
 	public boolean getMainProcces() {
 		return mainProcces;
 	}

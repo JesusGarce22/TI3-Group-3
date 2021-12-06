@@ -9,10 +9,22 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #19AA;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="optionC" layoutX="39.0" layoutY="332.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="250.0" text="Option C" />
-      <Button fx:id="optionD" layoutX="324.0" layoutY="332.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="250.0" text="Option D" />
-      <Button fx:id="optionB" layoutX="324.0" layoutY="264.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="250.0" text="Option B" />
-      <Button fx:id="optionA" layoutX="39.0" layoutY="264.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="250.0" text="Option A" />
+      <Button fx:id="optionC" layoutX="39.0" layoutY="332.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="250.0" text="Option C">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
+      <Button fx:id="optionD" layoutX="324.0" layoutY="332.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="250.0" text="Option D">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
+      <Button fx:id="optionB" layoutX="324.0" layoutY="264.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="250.0" text="Option B">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
+      <Button fx:id="optionA" layoutX="39.0" layoutY="264.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="250.0" text="Option A">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
       <ImageView fitHeight="194.0" fitWidth="250.0" layoutX="39.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Doc/albert-einstein.jpg" />
@@ -23,9 +35,9 @@
             <Font name="Agency FB" size="28.0" />
          </font>
       </Label>
-      <Label fx:id="operation" layoutX="355.0" layoutY="96.0" text="Operations">
+      <Label fx:id="operation" layoutX="352.0" layoutY="65.0" prefHeight="187.0" prefWidth="215.0" text="Operations" textAlignment="RIGHT" textOverrun="CENTER_ELLIPSIS">
          <font>
-            <Font size="36.0" />
+            <Font name="Agency FB" size="56.0" />
          </font>
       </Label>
       <Label fx:id="scoreLB" layoutX="100.0" layoutY="13.0" text="0">
@@ -33,24 +45,24 @@
             <Font size="28.0" />
          </font>
       </Label>
-      <Label layoutX="135.0" layoutY="16.0" text="Fails:">
+      <Label layoutX="164.0" layoutY="16.0" text="Fails:">
          <font>
             <Font name="Agency FB" size="28.0" />
          </font>
       </Label>
-      <Label fx:id="failLB" layoutX="189.0" layoutY="13.0" text="0">
+      <Label fx:id="failLB" layoutX="221.0" layoutY="13.0" text="0">
          <font>
             <Font size="28.0" />
          </font>
       </Label>
-      <Label layoutX="438.0" layoutY="20.0" text="TIME:">
+      <Label layoutX="409.0" layoutY="13.0" text="TIME:">
          <font>
-            <Font size="18.0" />
+            <Font size="28.0" />
          </font>
       </Label>
-      <Label fx:id="timeLabel" layoutX="489.0" layoutY="25.0" text="Label">
+      <Label fx:id="timeLabel" layoutX="489.0" layoutY="13.0" text="Label">
          <font>
-            <Font size="14.0" />
+            <Font size="28.0" />
          </font>
       </Label>
    </children>
