@@ -3,7 +3,6 @@ package model;
 public class ScoreTree {
 
 	private NodeScore root;
-	String top="";
 	
 	public void add(int key, Player player) {
 		if (root == null) {
@@ -13,26 +12,19 @@ public class ScoreTree {
 		}
 	}
 	
-	public String triggerInorder() {
-		String aux=inorder(root,0);
-		return aux;
+	public void triggerInorder() {
+		inorder(root,0);
 	}
 	
-	public String inorder(NodeScore node,int n) {
+	public void inorder(NodeScore node,int n) {
 		// Caso base
 		if (node == null) {
-			
-			return top;
+			return;
 		}
 		// Recursivo
 		n++;
 		inorder(node.getLeft(),n);
-		top+= n+" "+node.getScore()+"\n";
-		//System.out.println(n+" "+node.getScore());
+		System.out.println(n+" "+node.getScore());
 		inorder(node.getRight(),n);
-		 
-		 return top;
 	}
-	
-
 }
