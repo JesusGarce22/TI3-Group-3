@@ -35,7 +35,7 @@ public class Game extends Stage {
 	private Challenge challenge;
 	private Chronometer chro;
 	private static Player player;
-	
+
 	@FXML
 	private Button deleteScore;
 
@@ -46,7 +46,8 @@ public class Game extends Stage {
 	private Button searchUser;
 	@FXML
 	private BorderPane mainPane;
-
+	@FXML
+	private TextField searchName;
 	@FXML
 	private TextField userName;
 
@@ -90,7 +91,7 @@ public class Game extends Stage {
 	private File ref;
 	private String read;
 	private File refObject;
-	
+
 	public Game() {
 		nameTree = new NameTree();
 		scoreTree = new ScoreTree();
@@ -98,7 +99,7 @@ public class Game extends Stage {
 		chro = new Chronometer(this);
 		ref = new File("ListaDeJugadores.txt");
 		refObject = new File("ObjecPlayer.temp");
-		
+
 	}
 
 	public void loadLogin() throws IOException {
@@ -158,18 +159,20 @@ public class Game extends Stage {
 		mainPane.getChildren().clear();
 		mainPane.setTop(addUser);
 
-		String key = nameDeleteOrSearch.getText();
-		nameTree.triggerSearch(key);
+		this.close();
+
 	}
 
 	public void deleteScore(ActionEvent event) throws IOException {
 
-		String key = nameDeleteOrSearch.getText();
+		String key = player.getUserName();
 		nameTree.trigerDelete(key);
+
+		top5.setText("This player was delete");
 	}
 
 	@FXML
-	public void deleteOrSearch(ActionEvent event) throws IOException {
+	public void showSear(ActionEvent event) throws IOException {
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Positions.fxml"));
 
@@ -179,20 +182,22 @@ public class Game extends Stage {
 		mainPane.setCenter(addUser);
 		mainPane.getChildren().clear();
 		mainPane.setTop(addUser);
+
+		String key = searchName.getText();
+		model.Node x = nameTree.triggerSearch(key);
+		top5.setText(x.getKey()+" his score is "+x.getValue().getScore());
 	}
 
 	public void getOperation() throws IOException {
 
 		if (timeLabel.getText().equals("0")) {
-			
+
 			int newScore = Integer.parseInt(scoreLB.getText());
 			player.setScore(newScore);
-			
+
 			scoreTree.add(player.getScore(), player);
-			scoreTree.triggerInorder();
-			
-			//top5.setText("probando");
-			
+			String aux = scoreTree.triggerInorder();
+
 			saveObject(player);
 			saveReadableFile(player);
 			loadData();
@@ -208,6 +213,7 @@ public class Game extends Stage {
 			mainPane.getChildren().clear();
 			mainPane.setTop(addUser);
 
+			top5.setText(aux);
 		}
 
 		operation.setText(challenge.operators());
@@ -489,7 +495,7 @@ public class Game extends Stage {
 	public void saveObject(Player p) {
 
 		try {
-			
+
 			FileOutputStream fos = new FileOutputStream(refObject);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(p);
@@ -499,27 +505,27 @@ public class Game extends Stage {
 			ex.printStackTrace();
 		}
 	}
-	
+
 	public void loadData() {
-		
+
 		try {
 			File f = refObject;
 			FileInputStream fis = new FileInputStream(f);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			Player s = (Player) ois.readObject();
 			nameTree.add(s.getUserName(), s);
-			
+
 		}catch(IOException ex) {
-			
+
 			ex.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void saveReadableFile(Player p) {
-		
+
 		try {
 			chargeReadableFile();
 			String data = read;
@@ -527,28 +533,28 @@ public class Game extends Stage {
 			FileOutputStream fos = new FileOutputStream(ref);
 			fos.write(data.getBytes());
 			fos.close();
-			
+
 		}catch(IOException ex) {
 			ex.printStackTrace();
 		}
 	}
-	
+
 	public void chargeReadableFile() {
-		
+
 		try {
 			File file = ref;
 			FileInputStream fis = new FileInputStream(file);
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			
+
 			byte[] buffer = new byte[1024];
 			int reader = 0;
-			
+
 			while((reader = fis.read(buffer)) != -1) {
 				baos.write(buffer, 0, reader);
 			}
 			fis.close();
 			baos.close();
-			
+
 			read = baos.toString();
 		}
 		catch(IOException ex) {
