@@ -1,6 +1,10 @@
 package model;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private String userName;
 	private int score;
@@ -21,5 +25,10 @@ public class Player {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	
+	public String toString() {
+		return "Nombre: "+userName+ " Puntaje: "+score + "\n";
+	}
+	
 
 }

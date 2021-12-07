@@ -1,6 +1,11 @@
 package ui;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -22,7 +27,7 @@ import model.NameTree;
 import model.Player;
 import model.ScoreTree;
 
-public class Game extends Stage{
+public class Game extends Stage {
 
 	private NameTree nameTree;
 	private ScoreTree scoreTree;
@@ -86,6 +91,7 @@ public class Game extends Stage{
 		scoreTree = new ScoreTree();
 		challenge = new Challenge();
 		chro = new Chronometer(this);
+		
 	}
 
 	public void loadLogin() throws IOException {
@@ -100,18 +106,18 @@ public class Game extends Stage{
 
 	}
 
-	public void enterToTheGame(ActionEvent event)throws IOException {
+	public void enterToTheGame(ActionEvent event) throws IOException {
 
-		if(userName.getText().equals("")) {
+		if (userName.getText().equals("")) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("ERROR");
 			alert.setHeaderText("You must fill all the fields");
 			alert.setContentText(null);
 			alert.showAndWait();
-		}else {
-			String name=userName.getText();
+		} else {
+			String name = userName.getText();
 
-			Player p = new Player(name,0);
+			Player p = new Player(name, 0);
 			nameTree.add(name, p);
 			scoreTree.add(0, p);
 
@@ -135,7 +141,6 @@ public class Game extends Stage{
 		getOperation(p);
 
 	}
-
 
 	public void SearchUser(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Search.fxml"));
@@ -172,10 +177,14 @@ public class Game extends Stage{
 
 	public void getOperation(Player p) throws IOException {
 
-		if(timeLabel.getText().equals("0")) {
+		if (timeLabel.getText().equals("0")) {
 
 			int newScore = Integer.parseInt(scoreLB.getText());
 			p.setScore(newScore);
+			saveObject(p);
+			saveReadableFile(p);
+			loadData();
+
 			scoreTree.triggerInorder();
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Positions.fxml"));
@@ -187,19 +196,17 @@ public class Game extends Stage{
 			mainPane.getChildren().clear();
 			mainPane.setTop(addUser);
 
-
 		}
 
 		operation.setText(challenge.operators());
 		ramdonBotton();
 		initBottons(p);
 
-
 	}
 
 	public void tell(boolean process) {
 		// run on ui thread
-		Platform.runLater(() -> { 
+		Platform.runLater(() -> {
 
 			mainProcces = process;
 
@@ -242,7 +249,6 @@ public class Game extends Stage{
 				}
 
 			}
-
 
 		});
 
@@ -357,7 +363,6 @@ public class Game extends Stage{
 
 		});
 
-
 	}
 
 	public void ramdonBotton() {
@@ -469,5 +474,51 @@ public class Game extends Stage{
 		return mainProcces;
 	}
 
-}
+	public void saveObject(Player p) {
 
+		try {
+			
+			File ref = new File("ObjecPlayer.temp");
+			FileOutputStream fos = new FileOutputStream(ref);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(p);
+			oos.close();
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+	public void loadData() {
+		
+		try {
+			File f = new File("ObjecPlayer.temp");
+			FileInputStream fis = new FileInputStream(f);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			Player p = (Player) ois.readObject();
+			// Agregar este objeto al arbol
+			
+		}catch(IOException ex) {
+			
+			ex.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveReadableFile(Player p) {
+		
+		try {
+			String data = p.toString();
+			File ref = new File("ListaDeJugadores.txt");
+			FileOutputStream fos = new FileOutputStream(ref);
+			fos.write(data.getBytes());
+			fos.close();
+			
+		}catch(IOException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+}
