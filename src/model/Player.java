@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Player implements Serializable {
 	
@@ -8,10 +9,12 @@ public class Player implements Serializable {
 	
 	private String userName;
 	private int score;
+	private static ArrayList<Player> pyer;
 	
 	public Player(String userName,int score)  {
 		this.score = score;
 		this.userName = userName;
+		pyer = new ArrayList<>();
 	}
 	public Player() {}
 	
@@ -31,6 +34,10 @@ public class Player implements Serializable {
 	public String toString() {
 		return "Nombre: "+userName+ " Puntaje: "+score + "\n";
 	}
+	
+	public ArrayList<Player> getPlayers(){
+		return pyer;
+	} 
 	
 
 }
