@@ -46,7 +46,8 @@ public class Game extends Stage {
 	private Button searchUser;
 	@FXML
 	private BorderPane mainPane;
-
+@FXML
+private TexField searchName;
 	@FXML
 	private TextField userName;
 

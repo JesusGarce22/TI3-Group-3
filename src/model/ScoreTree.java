@@ -27,7 +27,7 @@ public class ScoreTree {
 		// Recursivo
 		n++;
 		inorder(node.getLeft(),n);
-		top+= n+" "+node.getScore()+"\n";
+		top+= n+"."+" Score: "+node.getScore()+"\n";
 		//System.out.println(n+" "+node.getScore());
 		inorder(node.getRight(),n);
 		 
