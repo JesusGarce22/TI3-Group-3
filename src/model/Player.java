@@ -13,6 +13,8 @@ public class Player implements Serializable {
 		this.score = score;
 		this.userName = userName;
 	}
+	public Player() {}
+	
 	public int getScore() {
 		return score;
 	}

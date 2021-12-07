@@ -89,7 +89,7 @@ public class Game extends Stage {
 	private boolean mainProcces = true;
 	private File ref;
 	private String read;
-	File refObject = new File("ObjecPlayer.temp");
+	private File refObject;
 	
 	public Game() {
 		nameTree = new NameTree();
@@ -97,6 +97,7 @@ public class Game extends Stage {
 		challenge = new Challenge();
 		chro = new Chronometer(this);
 		ref = new File("ListaDeJugadores.txt");
+		refObject = new File("ObjecPlayer.temp");
 		
 	}
 
@@ -489,7 +490,6 @@ public class Game extends Stage {
 
 		try {
 			
-			File refObject = new File("ObjecPlayer.temp");
 			FileOutputStream fos = new FileOutputStream(refObject);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(p);
@@ -503,7 +503,7 @@ public class Game extends Stage {
 	public void loadData() {
 		
 		try {
-			File f = new File("ObjecPlayer.temp");
+			File f = refObject;
 			FileInputStream fis = new FileInputStream(f);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			Player s = (Player) ois.readObject();

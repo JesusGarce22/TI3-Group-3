@@ -1,3 +1,4 @@
 Nombre: Cristian Puntaje: 60
 Nombre: Jesus Puntaje: -50
 Nombre: Sebas Puntaje: -110
+Nombre: Cris Puntaje: -130
