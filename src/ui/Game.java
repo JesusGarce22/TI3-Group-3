@@ -1,5 +1,6 @@
 package ui;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -86,12 +87,16 @@ public class Game extends Stage {
 	private int score1;
 	private int fails;
 	private boolean mainProcces = true;
-
+	private File ref;
+	private String read;
+	File refObject = new File("ObjecPlayer.temp");
+	
 	public Game() {
 		nameTree = new NameTree();
 		scoreTree = new ScoreTree();
 		challenge = new Challenge();
 		chro = new Chronometer(this);
+		ref = new File("ListaDeJugadores.txt");
 		
 	}
 
@@ -138,7 +143,7 @@ public class Game extends Stage {
 
 		chro.start();
 
-		getOperation(p);
+		getOperation();
 
 	}
 
@@ -206,7 +211,7 @@ public class Game extends Stage {
 
 		operation.setText(challenge.operators());
 		ramdonBotton();
-		initBottons(p);
+		initBottons();
 
 	}
 
@@ -484,8 +489,8 @@ public class Game extends Stage {
 
 		try {
 			
-			File ref = new File("ObjecPlayer.temp");
-			FileOutputStream fos = new FileOutputStream(ref);
+			File refObject = new File("ObjecPlayer.temp");
+			FileOutputStream fos = new FileOutputStream(refObject);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(p);
 			oos.close();
@@ -501,8 +506,8 @@ public class Game extends Stage {
 			File f = new File("ObjecPlayer.temp");
 			FileInputStream fis = new FileInputStream(f);
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			Player p = (Player) ois.readObject();
-			// Agregar este objeto al arbol
+			Player s = (Player) ois.readObject();
+			nameTree.add(s.getUserName(), s);
 			
 		}catch(IOException ex) {
 			
@@ -516,13 +521,37 @@ public class Game extends Stage {
 	public void saveReadableFile(Player p) {
 		
 		try {
-			String data = p.toString();
-			File ref = new File("ListaDeJugadores.txt");
+			chargeReadableFile();
+			String data = read;
+			data += p.toString();
 			FileOutputStream fos = new FileOutputStream(ref);
 			fos.write(data.getBytes());
 			fos.close();
 			
 		}catch(IOException ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+	public void chargeReadableFile() {
+		
+		try {
+			File file = ref;
+			FileInputStream fis = new FileInputStream(file);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			
+			byte[] buffer = new byte[1024];
+			int reader = 0;
+			
+			while((reader = fis.read(buffer)) != -1) {
+				baos.write(buffer, 0, reader);
+			}
+			fis.close();
+			baos.close();
+			
+			read = baos.toString();
+		}
+		catch(IOException ex) {
 			ex.printStackTrace();
 		}
 	}

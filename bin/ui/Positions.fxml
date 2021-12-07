@@ -15,8 +15,11 @@
          </font>
       </Label>
       <Separator layoutY="81.0" prefHeight="0.0" prefWidth="600.0" />
-      <Button fx:id="deleteScore" layoutX="313.0" layoutY="348.0" mnemonicParsing="false" onAction="#deleteScore" prefHeight="38.0" prefWidth="118.0" text="Delete  score" />
-      <TextArea fx:id="top5" layoutX="120.0" layoutY="100.0" prefHeight="220.0" prefWidth="348.0" />
-      <Button fx:id="searchUser" layoutX="160.0" layoutY="348.0" mnemonicParsing="false" onAction="#SearchUser" prefHeight="38.0" prefWidth="118.0" text="Searc user" />
+      <Button fx:id="deleteScore" layoutX="300.0" layoutY="340.0" mnemonicParsing="false" onAction="#deleteScore" prefHeight="38.0" prefWidth="118.0" text="Delete  score" />
+      <TextArea fx:id="top5" layoutX="120.0" layoutY="100.0" prefHeight="220.0" prefWidth="348.0" promptText="Top 5">
+         <font>
+            <Font name="Agency FB" size="22.0" />
+         </font></TextArea>
+      <Button fx:id="searchUser" layoutX="151.0" layoutY="340.0" mnemonicParsing="false" onAction="#SearchUser" prefHeight="38.0" prefWidth="118.0" text="Searc user" />
    </children>
 </AnchorPane>
