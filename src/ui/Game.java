@@ -158,18 +158,20 @@ public class Game extends Stage {
 		mainPane.getChildren().clear();
 		mainPane.setTop(addUser);
 
-		String key = nameDeleteOrSearch.getText();
-		nameTree.triggerSearch(key);
+		this.close();
+
 	}
 
 	public void deleteScore(ActionEvent event) throws IOException {
 
-		String key = nameDeleteOrSearch.getText();
+		String key = player.getUserName();
 		nameTree.trigerDelete(key);
+
+		top5.setText("This player was delete");
 	}
 
 	@FXML
-	public void deleteOrSearch(ActionEvent event) throws IOException {
+	public void showSear(ActionEvent event) throws IOException {
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Positions.fxml"));
 
@@ -179,6 +181,10 @@ public class Game extends Stage {
 		mainPane.setCenter(addUser);
 		mainPane.getChildren().clear();
 		mainPane.setTop(addUser);
+
+		String key = searchName.getText();
+		model.Node x = nameTree.triggerSearch(key);
+		top5.setText(x.getKey()+" his score is "+x.getValue().getScore());
 	}
 
 	public void getOperation() throws IOException {
@@ -189,9 +195,7 @@ public class Game extends Stage {
 			player.setScore(newScore);
 			
 			scoreTree.add(player.getScore(), player);
-			scoreTree.triggerInorder();
-			
-			//top5.setText("probando");
+			String aux = scoreTree.triggerInorder();
 			
 			saveObject(player);
 			saveReadableFile(player);
@@ -208,6 +212,7 @@ public class Game extends Stage {
 			mainPane.getChildren().clear();
 			mainPane.setTop(addUser);
 
+			top5.setText(aux);
 		}
 
 		operation.setText(challenge.operators());
