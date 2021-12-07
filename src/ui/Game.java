@@ -35,7 +35,7 @@ public class Game extends Stage {
 	private Challenge challenge;
 	private Chronometer chro;
 	private static Player player;
-	
+
 	@FXML
 	private Button deleteScore;
 
@@ -46,8 +46,8 @@ public class Game extends Stage {
 	private Button searchUser;
 	@FXML
 	private BorderPane mainPane;
-@FXML
-private TexField searchName;
+	@FXML
+	private TextField searchName;
 	@FXML
 	private TextField userName;
 
@@ -91,7 +91,7 @@ private TexField searchName;
 	private File ref;
 	private String read;
 	private File refObject;
-	
+
 	public Game() {
 		nameTree = new NameTree();
 		scoreTree = new ScoreTree();
@@ -99,7 +99,7 @@ private TexField searchName;
 		chro = new Chronometer(this);
 		ref = new File("ListaDeJugadores.txt");
 		refObject = new File("ObjecPlayer.temp");
-		
+
 	}
 
 	public void loadLogin() throws IOException {
@@ -191,13 +191,13 @@ private TexField searchName;
 	public void getOperation() throws IOException {
 
 		if (timeLabel.getText().equals("0")) {
-			
+
 			int newScore = Integer.parseInt(scoreLB.getText());
 			player.setScore(newScore);
-			
+
 			scoreTree.add(player.getScore(), player);
 			String aux = scoreTree.triggerInorder();
-			
+
 			saveObject(player);
 			saveReadableFile(player);
 			loadData();
@@ -495,7 +495,7 @@ private TexField searchName;
 	public void saveObject(Player p) {
 
 		try {
-			
+
 			FileOutputStream fos = new FileOutputStream(refObject);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(p);
@@ -505,27 +505,27 @@ private TexField searchName;
 			ex.printStackTrace();
 		}
 	}
-	
+
 	public void loadData() {
-		
+
 		try {
 			File f = refObject;
 			FileInputStream fis = new FileInputStream(f);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			Player s = (Player) ois.readObject();
 			nameTree.add(s.getUserName(), s);
-			
+
 		}catch(IOException ex) {
-			
+
 			ex.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void saveReadableFile(Player p) {
-		
+
 		try {
 			chargeReadableFile();
 			String data = read;
@@ -533,28 +533,28 @@ private TexField searchName;
 			FileOutputStream fos = new FileOutputStream(ref);
 			fos.write(data.getBytes());
 			fos.close();
-			
+
 		}catch(IOException ex) {
 			ex.printStackTrace();
 		}
 	}
-	
+
 	public void chargeReadableFile() {
-		
+
 		try {
 			File file = ref;
 			FileInputStream fis = new FileInputStream(file);
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			
+
 			byte[] buffer = new byte[1024];
 			int reader = 0;
-			
+
 			while((reader = fis.read(buffer)) != -1) {
 				baos.write(buffer, 0, reader);
 			}
 			fis.close();
 			baos.close();
-			
+
 			read = baos.toString();
 		}
 		catch(IOException ex) {
