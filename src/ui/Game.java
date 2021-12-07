@@ -192,10 +192,11 @@ public class Game extends Stage {
 			scoreTree.triggerInorder();
 			
 			//top5.setText("probando");
-			loadData();
+			
 			saveObject(player);
 			saveReadableFile(player);
-			
+			loadData();
+
 			scoreTree.triggerInorder();
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Positions.fxml"));
@@ -488,11 +489,10 @@ public class Game extends Stage {
 	public void saveObject(Player p) {
 
 		try {
-			loadData();
-			player.getPlayers().add(p);
+			
 			FileOutputStream fos = new FileOutputStream(refObject);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(player.getPlayers());
+			oos.writeObject(p);
 			oos.close();
 
 		} catch (IOException ex) {
@@ -507,13 +507,7 @@ public class Game extends Stage {
 			FileInputStream fis = new FileInputStream(f);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			Player s = (Player) ois.readObject();
-			player.getPlayers().add(s);
-			
-			for(int i=0; i < player.getPlayers().size(); i++){
-				
-				nameTree.add(player.getPlayers().get(i).getUserName(), player.getPlayers().get(i));
-			}
-			
+			nameTree.add(s.getUserName(), s);
 			
 		}catch(IOException ex) {
 			

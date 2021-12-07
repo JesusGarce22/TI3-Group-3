@@ -3,3 +3,4 @@ Nombre: Jesus Puntaje: -50
 Nombre: Sebas Puntaje: -110
 Nombre: Cris Puntaje: -130
 Nombre: Lola Puntaje: -170
+Nombre: Mati Puntaje: -70

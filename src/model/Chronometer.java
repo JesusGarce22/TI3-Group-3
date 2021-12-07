@@ -13,7 +13,7 @@ public class Chronometer extends Thread {
 
 	public void run() {
 
-		for (int i = 60; i >= 0; i--) {
+		for (int i = 10; i >= 0; i--) {
 
 			game.setTimeLabel(i);
 			try {
