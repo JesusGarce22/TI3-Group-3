@@ -33,7 +33,8 @@ public class Game extends Stage {
 	private ScoreTree scoreTree;
 	private Challenge challenge;
 	private Chronometer chro;
-
+	private static Player player;
+	
 	@FXML
 	private Button deleteScore;
 
@@ -106,20 +107,19 @@ public class Game extends Stage {
 
 	}
 
-	public void enterToTheGame(ActionEvent event) throws IOException {
+	public void enterToTheGame(ActionEvent event)throws IOException {
 
-		if (userName.getText().equals("")) {
+		if(userName.getText().equals("")) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("ERROR");
 			alert.setHeaderText("You must fill all the fields");
 			alert.setContentText(null);
 			alert.showAndWait();
-		} else {
-			String name = userName.getText();
+		}else {
+			String name=userName.getText();
 
-			Player p = new Player(name, 0);
-			nameTree.add(name, p);
-			scoreTree.add(0, p);
+			player = new Player(name,0);
+			nameTree.add(name, player);
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Game.fxml"));
 
@@ -130,11 +130,11 @@ public class Game extends Stage {
 			mainPane.getChildren().clear();
 			mainPane.setTop(addUser);
 
-			init(p);
+			init();
 		}
 	}
 
-	public void init(Player p) throws IOException {
+	public void init() throws IOException {
 
 		chro.start();
 
@@ -175,14 +175,20 @@ public class Game extends Stage {
 		mainPane.setTop(addUser);
 	}
 
-	public void getOperation(Player p) throws IOException {
+	public void getOperation() throws IOException {
 
 		if (timeLabel.getText().equals("0")) {
-
+			
 			int newScore = Integer.parseInt(scoreLB.getText());
-			p.setScore(newScore);
-			saveObject(p);
-			saveReadableFile(p);
+			player.setScore(newScore);
+			
+			scoreTree.add(player.getScore(), player);
+			scoreTree.triggerInorder();
+			
+			//top5.setText("probando");
+			
+			saveObject(player);
+			saveReadableFile(player);
 			loadData();
 
 			scoreTree.triggerInorder();
@@ -213,7 +219,7 @@ public class Game extends Stage {
 		});
 	}
 
-	public void initBottons(Player p) {
+	public void initBottons() {
 
 		optionA.setOnAction(event -> {
 
@@ -227,7 +233,7 @@ public class Game extends Stage {
 				String sc = Integer.toString(score1);
 				scoreLB.setText(sc);
 				try {
-					getOperation(p);
+					getOperation();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -242,7 +248,7 @@ public class Game extends Stage {
 				failLB.setText(f);
 				scoreLB.setText(sc);
 				try {
-					getOperation(p);
+					getOperation();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -264,7 +270,7 @@ public class Game extends Stage {
 				String sc = Integer.toString(score1);
 				scoreLB.setText(sc);
 				try {
-					getOperation(p);
+					getOperation();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -279,7 +285,7 @@ public class Game extends Stage {
 				failLB.setText(f);
 				scoreLB.setText(sc);
 				try {
-					getOperation(p);
+					getOperation();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -301,7 +307,7 @@ public class Game extends Stage {
 				String sc = Integer.toString(score1);
 				scoreLB.setText(sc);
 				try {
-					getOperation(p);
+					getOperation();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -316,7 +322,7 @@ public class Game extends Stage {
 				failLB.setText(f);
 				scoreLB.setText(sc);
 				try {
-					getOperation(p);
+					getOperation();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -338,7 +344,7 @@ public class Game extends Stage {
 				String sc = Integer.toString(score1);
 				scoreLB.setText(sc);
 				try {
-					getOperation(p);
+					getOperation();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -353,7 +359,7 @@ public class Game extends Stage {
 				failLB.setText(f);
 				scoreLB.setText(sc);
 				try {
-					getOperation(p);
+					getOperation();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -13,18 +13,18 @@ public class ScoreTree {
 	}
 	
 	public void triggerInorder() {
-		inorder(root);
+		inorder(root,0);
 	}
 	
-	public void inorder(NodeScore node) {
+	public void inorder(NodeScore node,int n) {
 		// Caso base
 		if (node == null) {
 			return;
 		}
 		// Recursivo
-
-		inorder(node.getLeft());
-		System.out.println(node.getScore());
-		inorder(node.getRight());
+		n++;
+		inorder(node.getLeft(),n);
+		System.out.println(n+" "+node.getScore());
+		inorder(node.getRight(),n);
 	}
 }
